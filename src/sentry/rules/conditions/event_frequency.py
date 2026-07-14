@@ -1026,9 +1026,8 @@ def bucket_count(start: datetime, end: datetime, buckets: dict[datetime, int]) -
     return count
 
 
-def percent_increase(result: int | float, comparison_result: int | float) -> int:
-    return (
-        int(max(0, ((result - comparison_result) / comparison_result * 100)))
-        if comparison_result > 0
-        else 0
-    )
+def percent_increase(result: int | float, comparison_result: int | float) -> float:
+    if comparison_result <= 0:
+        return float("inf") if result > 0 else 0.0
+
+    return max(0.0, (result - comparison_result) / comparison_result * 100)
